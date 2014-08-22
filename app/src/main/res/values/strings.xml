@@ -3,5 +3,8 @@
 
     <string name="app_name">DneprMap</string>
     <string name="title_activity_maps">DneprMap</string>
+    <string name="title_activity_place">PlaceActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Рельеф</string>
 
 </resources>

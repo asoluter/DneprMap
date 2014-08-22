@@ -5,14 +5,14 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=3F:63:AD:18:CA:07:53:F7:51:6C:53:56:C6:57:78:43:59:30:A6:7B%3Bcom.asoluter.dneprmap
+https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=64:67:10:CF:B4:F3:2F:96:F0:28:61:82:BE:E4:48:8F:F3:A4:60:66%3Bcom.asoluter.dneprmap
 
     You can also add your credentials to an existing key, using this line:
-    3F:63:AD:18:CA:07:53:F7:51:6C:53:56:C6:57:78:43:59:30:A6:7B;com.asoluter.dneprmap
+    64:67:10:CF:B4:F3:2F:96:F0:28:61:82:BE:E4:48:8F:F3:A4:60:66;com.asoluter.dneprmap
 
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     --></string>
 
-    <string name="google_maps_key" templateMergeStrategy="preserve">AIzaSyC3qZxi11_wnw9lV4l6ey-G4054PjQgylw</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve">AIzaSyCwAXbb4LI6IO5auhBVoL1cKwuN1CxM0V0</string>
 </resources>

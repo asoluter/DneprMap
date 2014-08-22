@@ -1,8 +1,13 @@
 package com.asoluter.dneprmap;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -11,16 +16,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
+public class MapsActivity extends FragmentActivity {
 
-    String[] maptype=new String[]{"Карта","Земля"};
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
-    public boolean onNavigationItemSelected(int itemPos, long itemId) {
-        if(itemPos==0)mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        else mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        return false;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.maps, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.isChecked())mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        else mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -28,13 +38,12 @@ public class MapsActivity extends FragmentActivity implements ActionBar.OnNaviga
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ActionBar actionBar=getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,maptype);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        actionBar.setListNavigationCallbacks(adapter,this);
 
         setUpMapIfNeeded();
+
+        Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
+        intent.putExtra("title","Исторический музей");
+        startActivity(intent);
     }
 
     @Override
@@ -80,15 +89,17 @@ public class MapsActivity extends FragmentActivity implements ActionBar.OnNaviga
     private void setUpMap() {
 
         mMap.addMarker(new MarkerOptions().position(new LatLng(48.455803, 35.063861)).title("Исторический музей"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(48.455803, 35.063861)).title("Исторический музей"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(48.455807, 35.063861)).title("Исторический музей"));
 
-        mMap.setOnInfoWindowClickListener(onMarker);
+        //mMap.setOnInfoWindowClickListener(onMarker);
     }
 
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
-
+            Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
+            intent.putExtra("title",marker.getTitle());
+            startActivity(intent);
         }
     };
 }
