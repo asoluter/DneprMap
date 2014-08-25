@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 public class PlaceActivity extends Activity {
 
-    public static final String TABLE_NAME="places";
+    public static final String TABLE_NAME="places.sqlite3";
     public static String TABLE_ID;
     public static final String TABLE_PIC="picture";
     public static final String TABLE_TEXT="text";
@@ -51,15 +51,15 @@ public class PlaceActivity extends Activity {
         ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),TABLE_NAME);
         try{
             database=helper.openDataBase();
-            //makeActivity();
+            makeActivity();
         }catch (SQLException e){Log.wtf("info","FailDatabase");}
     }
 
     public void makeActivity(){
         Cursor cursor=database.query(TABLE_NAME,new String[]{TABLE_PIC,TABLE_TEXT},null,null,null,null,TABLE_ID);
-        cursor.moveToFirst();
-        picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
-        text.setText(cursor.getString(2));
+        //cursor.moveToFirst();
+        //picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
+        //text.setText(cursor.getString(2));
     }
 
     @Override

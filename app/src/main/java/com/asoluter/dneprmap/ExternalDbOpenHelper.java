@@ -13,29 +13,32 @@ import java.sql.SQLException;
 
 public class ExternalDbOpenHelper extends SQLiteOpenHelper {
 
+
+    //Path to the device folder with databases
     public static String DB_PATH;
+
+    //Database file name
     public static String DB_NAME;
     public SQLiteDatabase database;
     public final Context context;
 
-    public final SQLiteDatabase getDb(){
+    public SQLiteDatabase getDb() {
         return database;
     }
 
-    public ExternalDbOpenHelper(Context context,String databaseName){
-        super(context,databaseName,null,1);
-        this.context=context;
-        String packageName=context.getPackageName();
-        DB_PATH=String.format("//data//data//%s//databases//", packageName);
-        DB_NAME=databaseName;
+    public ExternalDbOpenHelper(Context context, String databaseName) {
+        super(context, databaseName, null, 1);
+        this.context = context;
+//Write a full path to the databases of your application
+        String packageName = context.getPackageName();
+        DB_PATH = String.format("//data//data//%s//databases//", packageName);
+        DB_NAME = databaseName;
         try{
             openDataBase();
-        }catch (SQLException s){
-
-        }
-
+        }catch (SQLException e){Log.e(this.getClass().toString(),"Error opening database");}
     }
 
+    //This piece of code will create a database if it’s not yet created
     public void createDataBase() {
         boolean dbExist = checkDataBase();
         if (!dbExist) {
@@ -43,42 +46,51 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
             try {
                 copyDataBase();
             } catch (IOException e) {
+                Log.e(this.getClass().toString(), "Copying error");
                 throw new Error("Error copying database!");
             }
+        } else {
+            Log.i(this.getClass().toString(), "Database already exists");
         }
     }
 
+    //Performing a database existence check
     private boolean checkDataBase() {
         SQLiteDatabase checkDb = null;
-        String path = DB_PATH + DB_NAME;
-        checkDb = SQLiteDatabase.openDatabase(path, null,SQLiteDatabase.OPEN_READONLY);
+
+            String path = DB_PATH + DB_NAME;
+            checkDb = SQLiteDatabase.openDatabase(path, null,
+                    SQLiteDatabase.OPEN_READONLY);
+
+//Android doesn’t like resource leaks, everything should
+        // be closed
         if (checkDb != null) {
             checkDb.close();
         }
         return checkDb != null;
     }
 
+    //Method for copying the database
     private void copyDataBase() throws IOException {
-        // Открываем поток для чтения из уже созданной нами БД
-        //источник в assets
+//Open a stream for reading from our ready-made database
+//The stream source is located in the assets
         InputStream externalDbStream = context.getAssets().open(DB_NAME);
 
-        // Путь к уже созданной пустой базе в андроиде
+//Path to the created empty database on your Android device
         String outFileName = DB_PATH + DB_NAME;
 
-        // Теперь создадим поток для записи в эту БД побайтно
+//Now create a stream for writing the database byte by byte
         OutputStream localDbStream = new FileOutputStream(outFileName);
 
-        // Собственно, копирование
+//Copying the database
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = externalDbStream.read(buffer)) > 0) {
             localDbStream.write(buffer, 0, bytesRead);
         }
-        // Мы будем хорошими мальчиками (девочками) и закроем потоки
+//Don’t forget to close the streams
         localDbStream.close();
         externalDbStream.close();
-
     }
 
     public SQLiteDatabase openDataBase() throws SQLException {
@@ -98,14 +110,8 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         }
         super.close();
     }
-
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-    }
-
+    public void onCreate(SQLiteDatabase db) {}
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 }

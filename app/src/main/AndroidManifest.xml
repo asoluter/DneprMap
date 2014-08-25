@@ -27,6 +27,7 @@
         <activity
             android:name=".PlaceActivity"
             android:label="@string/title_activity_place"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MapsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
