@@ -97,8 +97,7 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         String path = DB_PATH + DB_NAME;
         if (database == null) {
             createDataBase();
-            database = SQLiteDatabase.openDatabase(path, null,
-                    SQLiteDatabase.OPEN_READWRITE);
+            database = SQLiteDatabase.openDatabase(path, null,SQLiteDatabase.OPEN_READWRITE);
         }
         return database;
     }
