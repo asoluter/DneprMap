@@ -49,18 +49,15 @@ public class PlaceActivity extends Activity {
         text=(TextView)findViewById(R.id.text);
 
         ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),TABLE_NAME);
-<<<<<<< HEAD
         //try{
            // database=helper.openDataBase();
           //  makeActivity();
         //}catch (SQLException e){Log.wtf("info","FailDatabase");}
         picture.setImageResource(getResources().getIdentifier("histmuseum","drawable",getPackageName()));
-=======
         try{
             database=helper.openDataBase();
             makeActivity();
         }catch (SQLException e){Log.wtf("info","FailDatabase");}
->>>>>>> origin/master
     }
 
     public void makeActivity(){
