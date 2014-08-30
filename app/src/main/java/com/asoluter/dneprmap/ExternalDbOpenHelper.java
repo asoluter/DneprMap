@@ -2,6 +2,7 @@ package com.asoluter.dneprmap;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -19,7 +20,7 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
 
     //Database file name
     public static String DB_NAME;
-    public SQLiteDatabase database;
+    public SQLiteDatabase database=null;
     public final Context context;
 
     public SQLiteDatabase getDb() {
@@ -42,7 +43,7 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
     public void createDataBase() {
         boolean dbExist = checkDataBase();
         if (!dbExist) {
-            this.getReadableDatabase();
+            this.getWritableDatabase();
             try {
                 copyDataBase();
             } catch (IOException e) {
@@ -57,17 +58,20 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
     //Performing a database existence check
     private boolean checkDataBase() {
         SQLiteDatabase checkDb = null;
-
+        boolean check=false;
+        try{
             String path = DB_PATH + DB_NAME;
-            checkDb = SQLiteDatabase.openDatabase(path, null,
-                    SQLiteDatabase.OPEN_READONLY);
+            checkDb = SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.OPEN_READONLY);
+        }catch (SQLiteException e){}
+
 
 //Android doesn’t like resource leaks, everything should
         // be closed
         if (checkDb != null) {
+            check=true;
             checkDb.close();
         }
-        return checkDb != null;
+        return check;
     }
 
     //Method for copying the database

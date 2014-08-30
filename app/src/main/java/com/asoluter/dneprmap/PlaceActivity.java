@@ -18,10 +18,12 @@ import java.sql.SQLException;
 
 public class PlaceActivity extends Activity {
 
-    public static final String TABLE_NAME="places.sqlite3";
+    public static final String DATABASE_NAME="places.sqlite3";
     public static String TABLE_ID;
-    public static final String TABLE_PIC="picture";
-    public static final String TABLE_TEXT="text";
+    public static final String TABLE_NAME="places";
+    public static final String TABLE_TITLE="place";
+    public static final String TABLE_PIC="background";
+    public static final String TABLE_TEXT="description";
 
     private SQLiteDatabase database;
 
@@ -48,12 +50,15 @@ public class PlaceActivity extends Activity {
         picture=(ImageView)findViewById(R.id.picture);
         text=(TextView)findViewById(R.id.text);
 
-        ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),TABLE_NAME);
+
+        ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),DATABASE_NAME);
+
         //try{
            // database=helper.openDataBase();
           //  makeActivity();
         //}catch (SQLException e){Log.wtf("info","FailDatabase");}
         picture.setImageResource(getResources().getIdentifier("histmuseum","drawable",getPackageName()));
+
         try{
             database=helper.openDataBase();
             makeActivity();
@@ -61,10 +66,13 @@ public class PlaceActivity extends Activity {
     }
 
     public void makeActivity(){
-        Cursor cursor=database.query(TABLE_NAME,new String[]{TABLE_PIC,TABLE_TEXT},null,null,null,null,TABLE_ID);
-        //cursor.moveToFirst();
+        Cursor cursor=database.query(TABLE_NAME,new String[]{TABLE_TITLE,TABLE_PIC,TABLE_TEXT},null,null,null,null,null);
+        cursor.moveToFirst();
+        //while (cursor.getString(2)!=TABLE_ID){
+           //if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
+        //}
         //picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
-        //text.setText(cursor.getString(2));
+        text.setText(cursor.getString(cursor.getColumnIndex(TABLE_TITLE)));
     }
 
     @Override
