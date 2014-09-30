@@ -5,10 +5,10 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=64:67:10:CF:B4:F3:2F:96:F0:28:61:82:BE:E4:48:8F:F3:A4:60:66%3Bcom.asoluter.dneprmap
+https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=D0:10:76:11:01:0B:73:EC:1F:D8:91:07:60:29:F8:8D:01:90:7A:E0%3Bcom.asoluter.dneprmap
 
     You can also add your credentials to an existing key, using this line:
-    64:67:10:CF:B4:F3:2F:96:F0:28:61:82:BE:E4:48:8F:F3:A4:60:66;com.asoluter.dneprmap
+    D0:10:76:11:01:0B:73:EC:1F:D8:91:07:60:29:F8:8D:01:90:7A:E0;com.asoluter.dneprmap
 
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.

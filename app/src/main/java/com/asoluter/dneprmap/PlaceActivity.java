@@ -53,12 +53,6 @@ public class PlaceActivity extends Activity {
 
         ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),DATABASE_NAME);
 
-        //try{
-           // database=helper.openDataBase();
-          //  makeActivity();
-        //}catch (SQLException e){Log.wtf("info","FailDatabase");}
-        picture.setImageResource(getResources().getIdentifier("histmuseum","drawable",getPackageName()));
-
         try{
             database=helper.openDataBase();
             makeActivity();
@@ -68,11 +62,11 @@ public class PlaceActivity extends Activity {
     public void makeActivity(){
         Cursor cursor=database.query(TABLE_NAME,new String[]{TABLE_TITLE,TABLE_PIC,TABLE_TEXT},null,null,null,null,null);
         cursor.moveToFirst();
-        //while (cursor.getString(2)!=TABLE_ID){
-           //if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
-        //}
-        //picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
-        text.setText(cursor.getString(cursor.getColumnIndex(TABLE_TITLE)));
+        while (!cursor.getString(0).equals(TABLE_ID)){
+           if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
+        }
+        picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
+        text.setText(cursor.getString(2));
     }
 
     @Override

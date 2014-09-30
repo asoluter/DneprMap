@@ -41,9 +41,9 @@ public class MapsActivity extends FragmentActivity {
 
         setUpMapIfNeeded();
 
-        Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
-        intent.putExtra("title","Исторический музей");
-        startActivity(intent);
+        //Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
+        //intent.putExtra("title","Исторический музей");
+        //startActivity(intent);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions().position(new LatLng(48.455803, 35.063861)).title("Исторический музей"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(48.455807, 35.063861)).title("Исторический музей"));
 
-        //mMap.setOnInfoWindowClickListener(onMarker);
+        mMap.setOnInfoWindowClickListener(onMarker);
     }
 
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {
