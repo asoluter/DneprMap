@@ -3,9 +3,13 @@ package com.asoluter.dneprmap;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -16,9 +20,24 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.SQLException;
+import java.util.prefs.Preferences;
+
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    public static SharedPreferences preferences;
+    public static SharedPreferences.Editor editor;
+
+    public static SQLiteDatabase database;
+    public static Cursor cursor;
+
+    public static final String DATABASE_NAME="places.sqlite3";
+    public static final String TABLE_NAME="places";
+    public static final String TABLE_TITLE="place";
+    public static final String TABLE_PIC="background";
+    public static final String TABLE_TEXT="description";
+    public static final String TABLE_CHECK="checked";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -28,8 +47,8 @@ public class MapsActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.isChecked())mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        else mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        Intent intent=new Intent(getApplicationContext(),SettingsActivity.class);
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
@@ -40,10 +59,6 @@ public class MapsActivity extends FragmentActivity {
         ActionBar actionBar=getActionBar();
 
         setUpMapIfNeeded();
-
-        //Intent intent=new Intent(getApplicationContext(),PlaceActivity.class);
-        //intent.putExtra("title","Исторический музей");
-        //startActivity(intent);
     }
 
     @Override
@@ -68,6 +83,16 @@ public class MapsActivity extends FragmentActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+
+        try{
+
+                database=new ExternalDbOpenHelper(this,DATABASE_NAME).openDataBase();
+                cursor=OpenData.cursor(this);
+
+        }catch (SQLException e){
+            Log.wtf("info","FailDatabase");
+        }
+
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -88,8 +113,11 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(48.455803, 35.063861)).title("Исторический музей"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(48.455807, 35.063861)).title("Исторический музей"));
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            if(cursor.getInt(3)==1) mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(4), cursor.getDouble(5))).title(cursor.getString(0)));
+            cursor.moveToNext();
+        }
 
         mMap.setOnInfoWindowClickListener(onMarker);
     }

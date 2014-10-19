@@ -5,7 +5,8 @@
     <string name="title_activity_maps">DneprMap</string>
     <string name="title_activity_place">PlaceActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Рельеф</string>
+    <string name="action_settings">Settings</string>
     <string name="nobasetext">Not in base</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

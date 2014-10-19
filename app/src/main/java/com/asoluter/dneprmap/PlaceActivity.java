@@ -35,6 +35,8 @@ public class PlaceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
+
+
         Intent intent=getIntent();
 
         TABLE_ID=intent.getStringExtra("title");
@@ -50,17 +52,16 @@ public class PlaceActivity extends Activity {
         picture=(ImageView)findViewById(R.id.picture);
         text=(TextView)findViewById(R.id.text);
 
-
-        ExternalDbOpenHelper helper=new ExternalDbOpenHelper(getApplicationContext(),DATABASE_NAME);
-
-        try{
-            database=helper.openDataBase();
+        try {
             makeActivity();
-        }catch (SQLException e){Log.wtf("info","FailDatabase");}
+            database.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void makeActivity(){
-        Cursor cursor=database.query(TABLE_NAME,new String[]{TABLE_TITLE,TABLE_PIC,TABLE_TEXT},null,null,null,null,null);
+    public void makeActivity() throws SQLException {
+        Cursor cursor=OpenData.cursor(getApplicationContext());
         cursor.moveToFirst();
         while (!cursor.getString(0).equals(TABLE_ID)){
            if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();

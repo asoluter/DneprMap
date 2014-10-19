@@ -27,8 +27,17 @@
         <activity
             android:name=".PlaceActivity"
             android:label="@string/title_activity_place"
-            android:screenOrientation="portrait"
+            android:parentActivityName=".MapsActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.MapsActivity" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
             android:parentActivityName=".MapsActivity" >
+            android:screenOrientation="portrait"
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asoluter.dneprmap.MapsActivity" />
