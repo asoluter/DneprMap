@@ -2,48 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.asoluter.dneprmap" >
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light" >
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
-
-        <activity
-            android:name=".PlaceActivity"
-            android:label="@string/title_activity_place"
-            android:parentActivityName=".MapsActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.MapsActivity" />
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MapsActivity" >
-            android:screenOrientation="portrait"
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.MapsActivity" />
-        </activity>
-    </application>
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -54,5 +12,89 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- suppress AndroidDomInspection -->
+    <application
+        android:name="com.asoluter.dneprmap.DneprMap"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.asoluter.dneprmap.MapsActivity"
+            android:label="@string/title_activity_maps" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.asoluter.dneprmap.PlaceActivity"
+            android:label="@string/title_activity_place"
+            android:parentActivityName="com.asoluter.dneprmap.MapsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.asoluter.dneprmap.MapsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.FindPlaces"
+            android:label="@string/title_activity_find_places"
+            android:parentActivityName="com.asoluter.dneprmap.Choose"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.Choose" />
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.Choose"
+            android:label="@string/title_activity_choose"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeN" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.RadiusPlaces"
+            android:label="@string/title_activity_radius_places"
+            android:parentActivityName="com.asoluter.dneprmap.Choose" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.Choose" />
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.Travel"
+            android:label="@string/title_activity_travel"
+            android:parentActivityName="com.asoluter.dneprmap.Choose" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.Choose" />
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.OwnTravel"
+            android:label="@string/title_activity_own_travel"
+            android:parentActivityName="com.asoluter.dneprmap.Travel" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.Travel" />
+        </activity>
+        <activity
+            android:name="com.asoluter.dneprmap.Travel_maps"
+            android:label="@string/title_activity_travel_maps" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asoluter.dneprmap.Travel" />
+        </activity>
+    </application>
 
 </manifest>

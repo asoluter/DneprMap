@@ -54,7 +54,6 @@ public class PlaceActivity extends Activity {
 
         try {
             makeActivity();
-            database.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,7 +65,7 @@ public class PlaceActivity extends Activity {
         while (!cursor.getString(0).equals(TABLE_ID)){
            if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
         }
-        picture.setImageResource(getResources().getIdentifier(cursor.getString(1),"drawable",getPackageName()));
+        picture.setImageResource(getResources().getIdentifier(String.valueOf(cursor.getPosition()),"drawable",getPackageName()));
         text.setText(cursor.getString(2));
     }
 

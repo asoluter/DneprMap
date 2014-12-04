@@ -2,34 +2,34 @@
 <pre-dex-items>
 
     <item
-        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-5b6c586c756a617484d543d46d88b322b6835ba3.jar"
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\20.0.0\classes.jar"
+        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-48c0869955720ada5c06139f6ce13cb1c6a86bfc.jar"
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
+        revision="21.0.2"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
     <item
-        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-84c58508451676a0793a76cf3327303577a23727.jar"
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.2.08\classes.jar"
+        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-e5c487ec07f4570c486572581c70055a5365963b.jar"
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0\classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="1ed7a7a05185651f9af41ad93711cb96b66f331c"/>
+        revision="21.0.2"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
     <item
-        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-2d6eda73def129aa0b70c69216cb903d4a32b487.jar"
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-9db08b4d1f89c9e50abe602685204e0b9d5b58a5.jar"
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        revision="21.0.2"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
     <item
-        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-1fc0c1aaa6f6fe834a0e438f367e2ccc2b9fad25.jar"
-        jar="D:\Program Files (x86)\JetBrains\Android Studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-7703c08a2f710851e0aeee29d430b64f5d1817ab.jar"
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+        revision="21.0.2"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
     <item
-        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-f21a82bfbae4a34cbc9bcab3612e454fbd6e9f4b.jar"
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-25c2a80b03114b34c1fa8d7bf5d2583c5b1f51bf.jar"
+        jar="D:\Program Files (x86)\JetBrains\android-sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        revision="21.0.2"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
 
 </pre-dex-items>

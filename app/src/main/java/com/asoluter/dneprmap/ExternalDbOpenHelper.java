@@ -1,6 +1,7 @@
 package com.asoluter.dneprmap;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -14,11 +15,8 @@ import java.sql.SQLException;
 
 public class ExternalDbOpenHelper extends SQLiteOpenHelper {
 
-
-    //Path to the device folder with databases
     public static String DB_PATH;
 
-    //Database file name
     public static String DB_NAME;
     public SQLiteDatabase database=null;
     public final Context context;
@@ -30,7 +28,7 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
     public ExternalDbOpenHelper(Context context, String databaseName) {
         super(context, databaseName, null, 1);
         this.context = context;
-//Write a full path to the databases of your application
+
         String packageName = context.getPackageName();
         DB_PATH = String.format("//data//data//%s//databases//", packageName);
         DB_NAME = databaseName;
@@ -39,7 +37,6 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         }catch (SQLException e){Log.e(this.getClass().toString(),"Error opening database");}
     }
 
-    //This piece of code will create a database if it’s not yet created
     public void createDataBase() {
         boolean dbExist = checkDataBase();
         if (!dbExist) {
@@ -55,7 +52,6 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    //Performing a database existence check
     private boolean checkDataBase() {
         SQLiteDatabase checkDb = null;
         boolean check=false;
@@ -65,34 +61,30 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         }catch (SQLiteException e){}
 
 
-//Android doesn’t like resource leaks, everything should
-        // be closed
         if (checkDb != null) {
-            check=true;
-            checkDb.close();
+            /*Cursor cursor=checkDb.query("info",new String[]{"dataver"},null,null,null,null,null);
+            cursor.moveToFirst();
+            String s=cursor.getString(0);
+            if(s.equals(R.string.dataver))check=true;
+            checkDb.close();*/ check=true;
         }
         return check;
     }
 
-    //Method for copying the database
     private void copyDataBase() throws IOException {
-//Open a stream for reading from our ready-made database
-//The stream source is located in the assets
+
         InputStream externalDbStream = context.getAssets().open(DB_NAME);
 
-//Path to the created empty database on your Android device
         String outFileName = DB_PATH + DB_NAME;
 
-//Now create a stream for writing the database byte by byte
         OutputStream localDbStream = new FileOutputStream(outFileName);
 
-//Copying the database
         byte[] buffer = new byte[1024];
         int bytesRead;
         while ((bytesRead = externalDbStream.read(buffer)) > 0) {
             localDbStream.write(buffer, 0, bytesRead);
         }
-//Don’t forget to close the streams
+
         localDbStream.close();
         externalDbStream.close();
     }
