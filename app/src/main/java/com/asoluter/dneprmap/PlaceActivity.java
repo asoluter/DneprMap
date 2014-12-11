@@ -65,7 +65,7 @@ public class PlaceActivity extends Activity {
         while (!cursor.getString(0).equals(TABLE_ID)){
            if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
         }
-        picture.setImageResource(getResources().getIdentifier(String.valueOf(cursor.getPosition()),"drawable",getPackageName()));
+        picture.setImageResource(getResources().getIdentifier("p"+String.valueOf(cursor.getPosition()),"drawable",getPackageName()));
         text.setText(cursor.getString(2));
     }
 
