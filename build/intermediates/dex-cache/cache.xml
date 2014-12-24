@@ -9,11 +9,32 @@
         <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-e1be41e64d24add8216640b4ca4ebf50087e70d4.jar" />
     </item>
     <item
-        jar="D:\Program Files (x86)\JetBrains\android-sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="D:\DneprMap\app\src\libs\gson-2.2.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
+        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\gson-2.2.4-07f3875c41c07ad173f5ced6405768250041d834.jar" />
+    </item>
+    <item
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cf251baf39f5c5138224b67b4106eb6331abbd13">
+        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-2e2e084c2d7df408bd9d61610f4759814c439635.jar" />
+    </item>
+    <item
+        jar="D:\Program Files (x86)\JetBrains\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-e16cbab63a44df1d184636b562a3167c5a6fd046.jar" />
+        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-c9438d343ceef2c1b00bf9ccb93c0ffa557f443d.jar" />
+    </item>
+    <item
+        jar="D:\DneprMap\app\src\libs\retrofit-1.8.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
+        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\retrofit-1.8.0-c199a602903504c92d8382240d46b4af113aadfc.jar" />
     </item>
     <item
         jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
@@ -35,27 +56,6 @@
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
         <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-323b43f9e6df5bc1da44ff4589a0dc419844a46e.jar" />
-    </item>
-    <item
-        jar="C:\Users\Игорь\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.8.0\a517f29ed06be2b2879524fcd94b6e9b36e2e0b5\retrofit-1.8.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\retrofit-1.8.0-5de3a11bb2b390cd8fd4c946890d21247c16f98b.jar" />
-    </item>
-    <item
-        jar="C:\Users\Игорь\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\gson-2.3-a41329bd27d233ab436b1e69100e470399ca3913.jar" />
-    </item>
-    <item
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="930e8ad21abe9439e61d5f4da51cf01d01f18f4d">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-e99ecc76e55a68ac6aaaf740e6f40c2816f08443.jar" />
     </item>
 
 </items>

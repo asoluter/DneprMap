@@ -1,9 +1,11 @@
 package com.asoluter.dneprmap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Display;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,16 +15,32 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import retrofit.RestAdapter;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import java.util.Map;
 
 public class Travel_maps extends FragmentActivity {
+
+
+
+    private static final LatLng AMSTERDAM = new LatLng(52.37518, 4.895439);
+    private static final LatLng PARIS = new LatLng(48.856132, 2.352448);
+    private static final LatLng FRANKFURT = new LatLng(50.111772, 8.682632);
+
+
+    private LatLngBounds latlngBounds;
+
+    private Polyline newPolyline;
+    private boolean isTravelingToParis = false;
+    private int width, height;
+
+
+
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -30,12 +48,14 @@ public class Travel_maps extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_maps);
+        getScreenDimanstions();
         setUpMapIfNeeded();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         setUpMapIfNeeded();
     }
 
@@ -55,6 +75,7 @@ public class Travel_maps extends FragmentActivity {
      * method in {@link #onResume()} to guarantee that it will be called.
      */
     private void setUpMapIfNeeded() {
+
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -63,7 +84,13 @@ public class Travel_maps extends FragmentActivity {
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 Intent intent=getIntent();
-                setUpMap(intent.getStringExtra("position"),intent.getStringExtra("destination"));
+
+                Bundle bundle=intent.getBundleExtra("bundle");
+                LatLng from=bundle.getParcelable("position");
+                LatLng to=bundle.getParcelable("destination");
+                latlngBounds = createLatLngBoundsObject(from,to);
+
+                setUpMap(from, to);
             }
         }
     }
@@ -74,65 +101,65 @@ public class Travel_maps extends FragmentActivity {
      * <p/>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
-    private void setUpMap(String position,String destination) {
+    private void setUpMap(LatLng position,LatLng destination) {
+        mMap.addMarker(new MarkerOptions().position(position));
+        mMap.addMarker(new MarkerOptions().position(destination));
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("https://maps.googleapis.com")
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        RouteApi routeService = restAdapter.create(RouteApi.class);
-        RouteResponse routeResponse = routeService.getRoute(position, destination, true, "ru");
-
-        List<LatLng> mPoints= PolyUtil.decode(routeResponse.getPoints());
-
-        PolylineOptions line = new PolylineOptions();
-        line.width(4f).color(R.color.material_blue_grey_900);
-        LatLngBounds.Builder latLngBuilder = new LatLngBounds.Builder();
-        for (int i = 0; i < mPoints.size(); i++) {
-            if (i == 0) {
-                MarkerOptions startMarkerOptions = new MarkerOptions()
-                        .position(mPoints.get(i))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher));
-                mMap.addMarker(startMarkerOptions);
-            } else if (i == mPoints.size() - 1) {
-                MarkerOptions endMarkerOptions = new MarkerOptions()
-                        .position(mPoints.get(i))
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher));
-                mMap.addMarker(endMarkerOptions);
-            }
-            line.add(mPoints.get(i));
-            latLngBuilder.include(mPoints.get(i));
-        }
-        mMap.addPolyline(line);
-        int size = getResources().getDisplayMetrics().widthPixels;
-        LatLngBounds latLngBounds = latLngBuilder.build();
-        CameraUpdate track = CameraUpdateFactory.newLatLngBounds(latLngBounds, size, size, 25);
-        mMap.moveCamera(track);
+        findDirections(position.latitude,position.longitude,destination.latitude,destination.longitude,GMapV2Direction.MODE_WALKING);
     }
 
-    public interface RouteApi {
-        @GET("/maps/api/directions/json")
-        RouteResponse getRoute(
-                @Query(value = "origin", encodeValue = false) String position,
-                @Query(value = "destination", encodeValue = false) String destination,
-                @Query("sensor") boolean sensor,
-                @Query("language") String language);
+    public void handleGetDirectionsResult(ArrayList<LatLng> directionPoints) {
+        PolylineOptions rectLine = new PolylineOptions().width(5).color(Color.RED);
+
+        for(int i = 0 ; i < directionPoints.size() ; i++)
+        {
+            rectLine.add(directionPoints.get(i));
+        }
+        if (newPolyline != null)
+        {
+            newPolyline.remove();
+        }
+        newPolyline = mMap.addPolyline(rectLine);
+        if (isTravelingToParis)
+        {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width,height,150));
+        }
+        else
+        {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height,150));
+        }
+
     }
 
-    public class RouteResponse {
+    private void getScreenDimanstions()
+    {
+        Display display = getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
+    }
 
-        public List<Route> routes;
+    private LatLngBounds createLatLngBoundsObject(LatLng firstLocation, LatLng secondLocation)
+    {
+        if (firstLocation != null && secondLocation != null)
+        {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(firstLocation).include(secondLocation);
 
-        public String getPoints() {
-            return this.routes.get(0).overview_polyline.points;
+            return builder.build();
         }
+        return null;
+    }
 
-        class Route {
-            OverviewPolyline overview_polyline;
-        }
+    public void findDirections(double fromPositionDoubleLat, double fromPositionDoubleLong, double toPositionDoubleLat, double toPositionDoubleLong, String mode)
+    {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put(GetDirectionsAsyncTask.USER_CURRENT_LAT, String.valueOf(fromPositionDoubleLat));
+        map.put(GetDirectionsAsyncTask.USER_CURRENT_LONG, String.valueOf(fromPositionDoubleLong));
+        map.put(GetDirectionsAsyncTask.DESTINATION_LAT, String.valueOf(toPositionDoubleLat));
+        map.put(GetDirectionsAsyncTask.DESTINATION_LONG, String.valueOf(toPositionDoubleLong));
+        map.put(GetDirectionsAsyncTask.DIRECTIONS_MODE, mode);
 
-        class OverviewPolyline {
-            String points;
-        }
+        GetDirectionsAsyncTask asyncTask = new GetDirectionsAsyncTask(this);
+        asyncTask.execute(map);
     }
 }

@@ -11,7 +11,7 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_find_places">Места</string>
     <string name="dataver">0.01</string>
-    <string name="title_activity_choose">Choose</string>
+    <string name="title_activity_choose">DneprMap</string>
     <string name="title_activity_radius_places">RadiusPlaces</string>
     <string name="title_activity_travel">Travel</string>
     <string name="title_activity_own_travel">OwnTravel</string>

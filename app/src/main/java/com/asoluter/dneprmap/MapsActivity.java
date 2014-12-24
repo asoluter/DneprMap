@@ -114,12 +114,12 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
 
         cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
+        /*while (!cursor.isAfterLast()){
             if(cursor.getInt(3)==1) mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(4), cursor.getDouble(5))).title(cursor.getString(0)));
             cursor.moveToNext();
         }
 
-        mMap.setOnInfoWindowClickListener(onMarker);
+        mMap.setOnInfoWindowClickListener(onMarker);*/
     }
 
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {

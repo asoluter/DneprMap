@@ -15,10 +15,12 @@ public class Choose extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
+
         Button search=(Button)findViewById(R.id.searchbt);
+        Button radius=(Button)findViewById(R.id.radiusbt);
 
         search.setOnClickListener(onClickListener);
-
+        radius.setOnClickListener(onClickListener);
     }
 
 
@@ -33,7 +35,7 @@ public class Choose extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you specify a parent activity in AndroidManifest.xml
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -54,6 +56,11 @@ public class Choose extends Activity {
                     onSearch();
                     break;
                 }
+                case R.id.radiusbt:
+                {
+                    onRadius();
+                    break;
+                }
             }
         }
     };
@@ -66,7 +73,7 @@ public class Choose extends Activity {
     public void onRadius(){
 
         Intent intent=new Intent(getApplicationContext(),MapsActivity.class);
-
+        startActivity(intent);
 
     }
 }

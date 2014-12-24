@@ -1,5 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.asoluter.dneprmap.PlaceActivity" >
+    <item
+        android:id="@+id/ic_bookmark"
+        android:showAsAction="always"
+        android:title="Travel"
+        android:titleCondensed="Travel"
+        android:icon="@drawable/ic_bookmark_black"/>
 
 </menu>

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.SQLException;
 
 
@@ -24,6 +26,7 @@ public class PlaceActivity extends Activity {
     public static final String TABLE_TITLE="place";
     public static final String TABLE_PIC="background";
     public static final String TABLE_TEXT="description";
+    public static String x,y;
 
     private SQLiteDatabase database;
 
@@ -65,8 +68,29 @@ public class PlaceActivity extends Activity {
         while (!cursor.getString(0).equals(TABLE_ID)){
            if(cursor.isLast()){text.setText(R.string.nobasetext);return;} cursor.moveToNext();
         }
-        picture.setImageResource(getResources().getIdentifier("p"+String.valueOf(cursor.getPosition()),"drawable",getPackageName()));
-        text.setText(cursor.getString(2));
+        picture.setImageResource(getResources().getIdentifier("p"+String.valueOf(cursor.getPosition()+1),"drawable",getPackageName()));
+        text.setText(cursor.getString(1));
+        x=cursor.getString(2);
+        y=cursor.getString(3);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==R.id.ic_bookmark){
+            Intent intent=new Intent(getApplicationContext(),Travel_maps.class);
+            LatLng lng=new LatLng(Double.valueOf(x),Double.valueOf(y));
+            LatLng lngp=new LatLng(48.460376, 35.081039);
+
+            Bundle bundle=new Bundle();
+            bundle.putParcelable("position",lngp);
+            bundle.putParcelable("destination",lng);
+
+            intent.putExtra("bundle",bundle);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
