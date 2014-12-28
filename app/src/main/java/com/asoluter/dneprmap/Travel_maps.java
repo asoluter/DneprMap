@@ -26,13 +26,6 @@ import java.util.Map;
 
 public class Travel_maps extends FragmentActivity {
 
-
-
-    private static final LatLng AMSTERDAM = new LatLng(52.37518, 4.895439);
-    private static final LatLng PARIS = new LatLng(48.856132, 2.352448);
-    private static final LatLng FRANKFURT = new LatLng(50.111772, 8.682632);
-
-
     private LatLngBounds latlngBounds;
 
     private Polyline newPolyline;
@@ -55,8 +48,8 @@ public class Travel_maps extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         setUpMapIfNeeded();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,width,height,200));
     }
 
     /**
@@ -122,11 +115,11 @@ public class Travel_maps extends FragmentActivity {
         newPolyline = mMap.addPolyline(rectLine);
         if (isTravelingToParis)
         {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width,height,150));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width,height,200));
         }
         else
         {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height,150));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height,200));
         }
 
     }

@@ -71,6 +71,6 @@ public class GetDirectionsAsyncTask extends AsyncTask<Map<String, String>, Objec
  
     private void processException()
     {
-        Toast.makeText(activity, "Error retriving data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Error retriving data", Toast.LENGTH_LONG).show();
     }
 }

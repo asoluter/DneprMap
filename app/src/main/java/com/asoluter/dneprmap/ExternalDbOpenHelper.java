@@ -65,8 +65,8 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
             /*Cursor cursor=checkDb.query("info",new String[]{"dataver"},null,null,null,null,null);
             cursor.moveToFirst();
             String s=cursor.getString(0);
-            if(s.equals(R.string.dataver))check=true;
-            checkDb.close();*/ check=true;
+            if(s.equals(R.string.dataver))check=true;*/
+            checkDb.close(); check=true;
         }
         return check;
     }

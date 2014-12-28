@@ -10,18 +10,11 @@
     tools:context="com.asoluter.dneprmap.SettingsActivity"
     android:weightSum="1">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editSearch"
-        android:editable="false"
-        android:hint="Место"
-        android:theme="@style/AppTheme">
-    </EditText>
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:theme="@style/AppTheme"
+        android:isScrollContainer="true"
 
         android:id="@+id/dataList">
 

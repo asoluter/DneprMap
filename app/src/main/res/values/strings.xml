@@ -16,5 +16,6 @@
     <string name="title_activity_travel">Travel</string>
     <string name="title_activity_own_travel">OwnTravel</string>
     <string name="title_activity_travel_maps">Map</string>
+    <string name="action_search">Поиск</string>
 
 </resources>
