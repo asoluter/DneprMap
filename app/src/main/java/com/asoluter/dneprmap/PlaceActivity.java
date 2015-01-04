@@ -70,6 +70,7 @@ public class PlaceActivity extends Activity {
         }
         picture.setImageResource(getResources().getIdentifier("p"+String.valueOf(cursor.getPosition()+1),"drawable",getPackageName()));
         text.setText(cursor.getString(1));
+        text.setText("p"+String.valueOf(cursor.getPosition()+1));
         x=cursor.getString(2);
         y=cursor.getString(3);
 
@@ -81,10 +82,8 @@ public class PlaceActivity extends Activity {
         if(id==R.id.ic_bookmark){
             Intent intent=new Intent(getApplicationContext(),Travel_maps.class);
             LatLng lng=new LatLng(Double.valueOf(x),Double.valueOf(y));
-            LatLng lngp=new LatLng(48.460376, 35.081039);
 
             Bundle bundle=new Bundle();
-            bundle.putParcelable("position",lngp);
             bundle.putParcelable("destination",lng);
 
             intent.putExtra("bundle",bundle);

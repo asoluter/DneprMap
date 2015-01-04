@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="debug">MyLogs</string>
+
     <string name="app_name">DneprMap</string>
     <string name="title_activity_maps">DneprMap</string>
     <string name="title_activity_place">PlaceActivity</string>
@@ -17,5 +19,9 @@
     <string name="title_activity_own_travel">OwnTravel</string>
     <string name="title_activity_travel_maps">Map</string>
     <string name="action_search">Поиск</string>
+
+    <string name="provider_gps">GPS</string>
+    <string name="provider_network">Network</string>
+    <string name="location_settings">Location settings</string>
 
 </resources>
