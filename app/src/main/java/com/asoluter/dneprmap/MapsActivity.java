@@ -208,15 +208,24 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
      */
     private void setUpMap(LatLng position) {
 
-        cursor.moveToFirst();
-        /**while (!cursor.isAfterLast()){
-            if(cursor.getInt(3)==1) mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(4), cursor.getDouble(5))).title(cursor.getString(0)));
+        /**cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            if(checkRadius(getLastBestLocation(),cursor.getDouble(4),cursor.getDouble(5))){
+                mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(4), cursor.getDouble(5)))
+                        .title(cursor.getString(0)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_black)));
+            }
             cursor.moveToNext();
         }*/
 
         PositionMarker=mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_history_black)));
 
         mMap.setOnInfoWindowClickListener(onMarker);
+    }
+
+    public boolean checkRadius(Location location,double latitude,double longitude){
+        double dist;
+        //if()
+        return true;
     }
 
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {
