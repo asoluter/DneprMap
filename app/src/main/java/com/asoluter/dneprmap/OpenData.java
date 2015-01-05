@@ -26,7 +26,8 @@ public class OpenData {
     public static Cursor cursor(Context context,String datan,String name,String[] s) throws SQLException {
 
         try {
-            return database(context,datan).query(name, s, null, null, null, null, null);
+            Cursor c= database(context,datan).query(name, s, null, null, null, null, null);
+            return c;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -35,11 +36,16 @@ public class OpenData {
 
     public static Cursor cursor(Context context) throws SQLException {
         try {
-            return database(context,DATABASE_NAME).query(TABLE_NAME, new String[]{TABLE_TITLE,TABLE_TEXT,TABLE_X,TABLE_Y}, null, null, null, null, null);
+            Cursor c= database(context,DATABASE_NAME).query(TABLE_NAME, new String[]{TABLE_TITLE,TABLE_TEXT,TABLE_X,TABLE_Y}, null, null, null, null, null);
+            return c;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void Close(){
+        database.close();
     }
 
 }

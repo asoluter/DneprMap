@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_settings"
+        android:showAsAction="always"
+        android:title="Settings"
+        android:titleCondensed="Settings"
+        android:icon="@drawable/ic_settings_black">
+        <menu>
+            <group
+                android:id="@+id/travel_settings_group"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/mode_walking_bimg"
+                    android:icon="@drawable/ic_directions_walk_black"
+                    android:title="Walking"/>
+                <item
+                    android:id="@+id/mode_driving_bimg"
+                    android:icon="@drawable/ic_directions_car_black"
+                    android:title="Driving"/>
+            </group>
+        </menu>
+        </item>
+
+</menu>

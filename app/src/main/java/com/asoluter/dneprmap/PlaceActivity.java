@@ -70,7 +70,6 @@ public class PlaceActivity extends Activity {
         }
         picture.setImageResource(getResources().getIdentifier("p"+String.valueOf(cursor.getPosition()+1),"drawable",getPackageName()));
         text.setText(cursor.getString(1));
-        text.setText("p"+String.valueOf(cursor.getPosition()+1));
         x=cursor.getString(2);
         y=cursor.getString(3);
 
@@ -79,7 +78,7 @@ public class PlaceActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        if(id==R.id.ic_bookmark){
+        if(id==R.id.ic_maps){
             Intent intent=new Intent(getApplicationContext(),Travel_maps.class);
             LatLng lng=new LatLng(Double.valueOf(x),Double.valueOf(y));
 

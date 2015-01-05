@@ -26,6 +26,7 @@ public class GetDirectionsAsyncTask extends AsyncTask<Map<String, String>, Objec
         super();
         this.activity=activity;
     }
+
  
     public void onPreExecute()
     {
@@ -71,6 +72,6 @@ public class GetDirectionsAsyncTask extends AsyncTask<Map<String, String>, Objec
  
     private void processException()
     {
-        Toast.makeText(activity, "Error retriving data", Toast.LENGTH_LONG).show();
+        Toast.makeText(activity, "Error retrieving data", Toast.LENGTH_LONG).show();
     }
 }

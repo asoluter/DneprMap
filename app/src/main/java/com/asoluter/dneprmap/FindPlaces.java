@@ -78,6 +78,8 @@ public class FindPlaces extends Activity implements SearchView.OnQueryTextListen
             cursor.moveToNext(); i++;
         }
 
+        OpenData.Close();
+
         dataAdapter=new ArrayAdapter<String>(getApplicationContext(),R.layout.place_list,placeList);
 
         dataAdapter.sort(new Comparator<String>() {
