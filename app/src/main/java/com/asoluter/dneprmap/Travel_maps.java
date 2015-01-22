@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +50,7 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
     public Location loc;
 
     private Polyline newPolyline;
+    private ArrayList<Polyline> polylines;
     private boolean isTravelingToParis = false;
     private int width, height;
 
@@ -68,6 +71,7 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
         locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,1,this);
         preferences=getSharedPreferences("MyPref",MODE_PRIVATE);
         editor=preferences.edit();
+        polylines=new ArrayList<>();
     }
 
     @Override
@@ -76,7 +80,7 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
         locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,1,this);
         locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,1,this);
 
-            setUpMapIfNeeded();
+        setUpMapIfNeeded();
 
 
     }
@@ -105,7 +109,6 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-
 
                 GetPos getPos=new GetPos();
                 getPos.execute();
@@ -145,15 +148,29 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
             Intent intent=getIntent();
-
-            Bundle bundle=intent.getBundleExtra("bundle");
-            LatLng to=bundle.getParcelable("destination");
+            String s=getIntent().getStringExtra("travel");
             from=new LatLng(loc.getLatitude(),loc.getLongitude());
-            latlngBounds = createLatLngBoundsObject(from,to);
-            Log.d(getResources().getString(R.string.debug), String.valueOf(from));
+            if(s==null){
+                Bundle bundle=intent.getBundleExtra("bundle");
+                LatLng to=bundle.getParcelable("destination");
 
-            setUpMap(from, to);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,width,height,300));
+                latlngBounds = createLatLngBoundsObject(from,to);
+                Log.d(getResources().getString(R.string.debug), String.valueOf(from));
+
+                setUpMap(from, to);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,width,height,300));
+            }
+            else
+            {
+                Cursor tcursor=OpenData.tcursor(getApplicationContext());
+                tcursor.moveToFirst();
+                while (!s.equals(tcursor.getString(0))){
+                    tcursor.moveToNext();
+                    if(tcursor.isAfterLast())break;
+                }
+                Toast.makeText(getApplicationContext(), String.valueOf(tcursor.getPosition()), Toast.LENGTH_SHORT);
+                tsetUpMap(from, tcursor.getString(1));
+            }
         }
 
         @Override
@@ -173,12 +190,36 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
      */
     private void setUpMap(LatLng position,LatLng destination) {
         PositionMarker=mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_history_black)));
-        DestinationMarker=mMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_black)));
+        DestinationMarker=mMap.addMarker(new MarkerOptions().position(destination));
 
         if(preferences.getBoolean("walking",true))findDirections(position.latitude,position.longitude,destination.latitude,destination.longitude,GMapV2Direction.MODE_WALKING);
         else findDirections(position.latitude,position.longitude,destination.latitude,destination.longitude,GMapV2Direction.MODE_DRIVING);
     }
 
+    private void tsetUpMap(LatLng position,String places){
+        PositionMarker=mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_history_black)));
+        String[] ss=places.split(","); int k=ss.length;
+        LatLng last=position;
+        LatLng prev;
+        try {
+            Cursor cursor=OpenData.cursor(getApplicationContext());
+            cursor.moveToPosition(Integer.valueOf(ss[0])-1);
+            prev=new LatLng(cursor.getDouble(2),cursor.getDouble(3));
+            if(preferences.getBoolean("walking",true))findDirections(last.latitude,last.longitude,prev.latitude,prev.longitude,GMapV2Direction.MODE_WALKING);
+            else findDirections(last.latitude,last.longitude,prev.latitude,prev.longitude,GMapV2Direction.MODE_DRIVING);
+            mMap.addMarker(new MarkerOptions().position(prev).title(cursor.getString(0)));
+            for(int i=1;i<k;i++){
+                cursor.moveToPosition(Integer.valueOf(ss[i])-1);
+                last=prev;
+                prev=new LatLng(cursor.getDouble(2),cursor.getDouble(3));
+                if(preferences.getBoolean("walking",true))findDirections(last.latitude,last.longitude,prev.latitude,prev.longitude,GMapV2Direction.MODE_WALKING);
+                else findDirections(last.latitude,last.longitude,prev.latitude,prev.longitude,GMapV2Direction.MODE_DRIVING);
+                mMap.addMarker(new MarkerOptions().position(prev).title(cursor.getString(0)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This if where we get Our Position
      */
@@ -195,7 +236,7 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
     public void onLocationChanged(Location location) {
         if(!location.equals(null)){
             from=new LatLng(location.getLatitude(),location.getLongitude());
-            moveMarker(PositionMarker,location);
+            if(PositionMarker!=null)moveMarker(PositionMarker,location);
         }
     }
 
@@ -220,6 +261,10 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
             else subMenu.getItem(1).setChecked(true);
         }
         else{
+            for(int i=0;i<polylines.size();i++){
+                polylines.get(i).remove();
+            }
+            polylines.clear();
             Boolean bt,b=preferences.getBoolean("walking",true); bt=b;
             if(item.getItemId()==R.id.mode_walking_bimg)b=true;
             if(item.getItemId()==R.id.mode_driving_bimg)b=false;
@@ -285,19 +330,17 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
         {
             rectLine.add(directionPoints.get(i));
         }
-        if (newPolyline != null)
-        {
-            newPolyline.remove();
-        }
-        newPolyline = mMap.addPolyline(rectLine);
-        if (isTravelingToParis)
+
+        newPolyline=mMap.addPolyline(rectLine);
+        polylines.add(newPolyline);
+        /**if (isTravelingToParis)
         {
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width,height,200));
         }
         else
         {
             mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height,200));
-        }
+        }*/
 
     }
 

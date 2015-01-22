@@ -44,6 +44,19 @@ public class OpenData {
         return null;
     }
 
+    public static final String TTABLE_NAME="travels";
+    public static final String TTABLE_TITLE="travel_name";
+    public static final String TTABLE_KEY="travel_key";
+
+    public static Cursor tcursor(Context context){
+        try {
+            return cursor(context,DATABASE_NAME,TTABLE_NAME,new String[]{TTABLE_TITLE,TTABLE_KEY});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void Close(){
         database.close();
     }

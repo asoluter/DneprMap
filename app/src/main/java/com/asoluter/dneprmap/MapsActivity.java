@@ -59,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     private LatLngBounds latlngBounds;
     private Marker PositionMarker;
-    private Marker DestinationMarker;
+
     ProgressDialog progressDialog;
     AlertDialog dialog;
     LatLng from;
@@ -107,7 +107,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,1,this);
         locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,1,this);
 
-            setUpMapIfNeeded();
+        setUpMapIfNeeded();
 
     }
 
@@ -187,7 +187,11 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             from=new LatLng(loc.getLatitude(),loc.getLongitude());
             Log.d(getResources().getString(R.string.debug), String.valueOf(from));
 
-            setUpMap(from);
+            try {
+                setUpMap(from);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,width,height,300));
         }
 
@@ -206,26 +210,54 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
      * <p>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
-    private void setUpMap(LatLng position) {
-
-        /**cursor.moveToFirst();
-        while (!cursor.isAfterLast()){
-            if(checkRadius(getLastBestLocation(),cursor.getDouble(4),cursor.getDouble(5))){
-                mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(4), cursor.getDouble(5)))
-                        .title(cursor.getString(0)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_black)));
-            }
-            cursor.moveToNext();
-        }*/
+    private void setUpMap(LatLng position) throws SQLException {
 
         PositionMarker=mMap.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_history_black)));
 
+        Cursor cursor=OpenData.cursor(getApplicationContext());
+        cursor.moveToFirst();
+        double rad=preferences.getInt("sradius",0)*100;
+        while (!cursor.isAfterLast()){
+            double x=cursor.getDouble(2);
+            if(x!=0)
+            if(rad==0||checkRadius(position.latitude,position.longitude,cursor.getDouble(2),cursor.getDouble(3))){
+                mMap.addMarker(new MarkerOptions().position(new LatLng(cursor.getDouble(2),cursor.getDouble(3))).title(cursor.getString(0)));} cursor.moveToNext();
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,10));
         mMap.setOnInfoWindowClickListener(onMarker);
     }
 
-    public boolean checkRadius(Location location,double latitude,double longitude){
-        double dist;
-        //if()
-        return true;
+    public boolean checkRadius(double lat1,double long1,double lat2,double long2){
+        double rad=preferences.getInt("sradius",0);
+        if(rad==0)return true;
+        //радиус Земли
+        long R = 6372795;
+
+
+
+        //перевод коордитат в радианы
+        lat1 *= Math.PI / 180;
+        lat2 *= Math.PI / 180;
+        long1 *= Math.PI / 180;
+        long2 *= Math.PI / 180;
+
+        //вычисление косинусов и синусов широт и разницы долгот
+        double cl1 = Math.cos(lat1);
+        double cl2 = Math.cos(lat2);
+        double sl1 = Math.sin(lat1);
+        double sl2 = Math.sin(lat2);
+        double delta = long2 - long1;
+        double cdelta = Math.cos(delta);
+        double sdelta = Math.sin(delta);
+
+        //вычисления длины большого круга
+        double y = Math.sqrt(Math.pow(cl2 * sdelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cdelta, 2));
+        double x = sl1 * sl2 + cl1 * cl2 * cdelta;
+        double ad = Math.atan2(y, x);
+        double dist = ad * R; //расстояние между двумя координатами в метрах
+
+        if(dist<=rad*100)return true;
+        else return false;
     }
 
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {
@@ -252,7 +284,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         if(!location.equals(null)){
-            from=new LatLng(location.getLatitude(),location.getLongitude());
+            //from=new LatLng(location.getLatitude(),location.getLongitude());
             moveMarker(PositionMarker,location);
         }
     }

@@ -73,6 +73,7 @@ public class PlaceActivity extends Activity {
         x=cursor.getString(2);
         y=cursor.getString(3);
 
+
     }
 
     @Override
@@ -94,6 +95,17 @@ public class PlaceActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        Cursor cursor= null;
+        try {
+            cursor = OpenData.cursor(getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        cursor.moveToFirst();
+        while (!cursor.getString(0).equals(TABLE_ID)){
+            if(cursor.isLast()){text.setText(R.string.nobasetext);return false;} cursor.moveToNext();
+        }
+        if(cursor.getString(2)!=""&&cursor.getString(2)!=null)
         getMenuInflater().inflate(R.menu.place, menu);
         return true;
     }

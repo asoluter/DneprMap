@@ -27,16 +27,20 @@ public class Choose extends Activity implements SeekBar.OnSeekBarChangeListener 
 
         Button search=(Button)findViewById(R.id.searchbt);
         Button radius=(Button)findViewById(R.id.radiusbt);
+        Button travel=(Button)findViewById(R.id.travelbt);
         seekBar=(SeekBar)findViewById(R.id.seekBar);
         seekBar.setMax(50);
         seekBar.setOnSeekBarChangeListener(this);
         tseek=(TextView)findViewById(R.id.tseekView);
         search.setOnClickListener(onClickListener);
         radius.setOnClickListener(onClickListener);
+        travel.setOnClickListener(onClickListener);
         preferences=getSharedPreferences("MyPref",MODE_PRIVATE);
         editor=preferences.edit();
         seekBar.setProgress(preferences.getInt(SRadius,0));
-        tseek.setText(String.valueOf(preferences.getInt(SRadius,0)*100)+" m");
+        int srad=preferences.getInt(SRadius,0);
+        if(srad!=0)tseek.setText(String.valueOf(srad*100)+" m");
+        else tseek.setText("All");
     }
 
 
@@ -77,6 +81,11 @@ public class Choose extends Activity implements SeekBar.OnSeekBarChangeListener 
                     onRadius();
                     break;
                 }
+                case R.id.travelbt:
+                {
+                    onTravel();
+                    break;
+                }
             }
         }
     };
@@ -93,11 +102,17 @@ public class Choose extends Activity implements SeekBar.OnSeekBarChangeListener 
 
     }
 
+    public void onTravel(){
+        Intent intent=new Intent(getApplicationContext(),Travel.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         editor.putInt(SRadius,progress);
         editor.apply();
-        tseek.setText(String.valueOf(progress*100)+" m");
+        if(progress!=0)tseek.setText(String.valueOf(progress*100)+" m");
+        else tseek.setText("All");
     }
 
     @Override
