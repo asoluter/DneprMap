@@ -76,7 +76,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.maps, menu);
+        //getMenuInflater().inflate(R.menu.maps, menu);
         return true;
     }
 

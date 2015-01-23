@@ -2,20 +2,6 @@
 <items version="2" >
 
     <item
-        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-e1be41e64d24add8216640b4ca4ebf50087e70d4.jar" />
-    </item>
-    <item
-        jar="D:\DneprMap\app\src\libs\gson-2.2.4.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\gson-2.2.4-07f3875c41c07ad173f5ced6405768250041d834.jar" />
-    </item>
-    <item
         jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.maps.android\android-maps-utils\0.3.4\classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -23,18 +9,18 @@
         <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-2e2e084c2d7df408bd9d61610f4759814c439635.jar" />
     </item>
     <item
+        jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\classes-e1be41e64d24add8216640b4ca4ebf50087e70d4.jar" />
+    </item>
+    <item
         jar="D:\Program Files (x86)\JetBrains\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-c9438d343ceef2c1b00bf9ccb93c0ffa557f443d.jar" />
-    </item>
-    <item
-        jar="D:\DneprMap\app\src\libs\retrofit-1.8.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a517f29ed06be2b2879524fcd94b6e9b36e2e0b5">
-        <dex dex="D:\DneprMap\app\build\intermediates\pre-dexed\debug\retrofit-1.8.0-c199a602903504c92d8382240d46b4af113aadfc.jar" />
     </item>
     <item
         jar="D:\DneprMap\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.5.87\classes.jar"
