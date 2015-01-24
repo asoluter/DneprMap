@@ -1,19 +1,16 @@
 <resources>
+    <style name="AppThemeC" parent="android:Theme.Material.NoActionBar">
 
+
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Material.Light">
-        <item name="android:textColor">@color/primary_text_default_material_light</item>
-        <item name="android:listViewStyle">@style/ListFont</item>
 
     </style>
 
     <style name="AppThemeN" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:textColor">@color/primary_text_default_material_light</item>
 
     </style>
 
-    <style name="ListFont" parent="@android:style/Widget.ListView">
-        <item name="android:textColor">@color/secondary_text_default_material_dark</item>
-    </style>
 
 </resources>

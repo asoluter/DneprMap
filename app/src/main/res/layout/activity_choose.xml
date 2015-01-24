@@ -16,7 +16,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:cropToPadding="false"
-            android:src="@drawable/dnepr1" />
+            android:src="@drawable/dneprback" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -31,7 +31,6 @@
                 android:text="Достопримечательности Днепропетровска"
                 android:id="@+id/textView"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/wallet_bright_foreground_holo_dark"
                 android:gravity="center" />
 
             <Button
@@ -69,7 +68,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="0000 m"
-                    android:textColor="@color/wallet_bright_foreground_holo_dark"
                     android:layout_weight="1"
                     android:id="@+id/tseekView"
                     android:layout_gravity="end" />

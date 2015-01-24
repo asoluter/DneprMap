@@ -56,7 +56,7 @@
         <activity
             android:name="com.asoluter.dneprmap.Choose"
             android:label="@string/title_activity_choose"
-            android:theme="@style/AppThemeN" >
+            android:theme="@style/AppThemeC" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
