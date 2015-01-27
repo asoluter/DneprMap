@@ -168,8 +168,9 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
                     tcursor.moveToNext();
                     if(tcursor.isAfterLast())break;
                 }
-                Toast.makeText(getApplicationContext(), String.valueOf(tcursor.getPosition()), Toast.LENGTH_SHORT);
+                //Toast.makeText(getApplicationContext(), String.valueOf(tcursor.getPosition()), Toast.LENGTH_SHORT);
                 tsetUpMap(from, tcursor.getString(1));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(from,10));
             }
         }
 
@@ -293,8 +294,8 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
     public void showAlert(){
         dialog=new AlertDialog.Builder(this).create();
 
-        dialog.setTitle("Warning");
-        dialog.setMessage("Не включены службы геолокаци");
+        dialog.setTitle("Внимание");
+        dialog.setMessage("Отключены службы геолокации");
         dialog.setCancelable(false);
         dialog.setButton(DialogInterface.BUTTON_POSITIVE,"Включить",new DialogInterface.OnClickListener() {
             @Override
@@ -333,14 +334,6 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
 
         newPolyline=mMap.addPolyline(rectLine);
         polylines.add(newPolyline);
-        /**if (isTravelingToParis)
-        {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width,height,200));
-        }
-        else
-        {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, width, height,200));
-        }*/
 
     }
 

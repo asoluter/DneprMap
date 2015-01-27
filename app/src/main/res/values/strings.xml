@@ -17,7 +17,7 @@
     <string name="title_activity_radius_places">RadiusPlaces</string>
     <string name="title_activity_travel">Маршруты</string>
     <string name="title_activity_own_travel">OwnTravel</string>
-    <string name="title_activity_travel_maps">Map</string>
+    <string name="title_activity_travel_maps">Маршрут на карте</string>
     <string name="action_search">Поиск</string>
 
     <string name="provider_gps">GPS</string>

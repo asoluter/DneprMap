@@ -21,10 +21,6 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
     public SQLiteDatabase database=null;
     public final Context context;
 
-    public SQLiteDatabase getDb() {
-        return database;
-    }
-
     public ExternalDbOpenHelper(Context context, String databaseName) {
         super(context, databaseName, null, 1);
         this.context = context;

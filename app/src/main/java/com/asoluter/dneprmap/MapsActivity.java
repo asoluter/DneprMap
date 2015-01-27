@@ -192,7 +192,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds,width,height,300));
         }
 
         @Override
@@ -232,8 +231,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         if(rad==0)return true;
         //радиус Земли
         long R = 6372795;
-
-
 
         //перевод коордитат в радианы
         lat1 *= Math.PI / 180;
