@@ -51,7 +51,6 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
 
     private Polyline newPolyline;
     private ArrayList<Polyline> polylines;
-    private boolean isTravelingToParis = false;
     private int width, height;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -235,8 +234,10 @@ public class Travel_maps extends FragmentActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if(!location.equals(null)){
+        if(location!=null){
             from=new LatLng(location.getLatitude(),location.getLongitude());
+
+
             if(PositionMarker!=null)moveMarker(PositionMarker,location);
         }
     }

@@ -49,9 +49,6 @@
             android:name="com.asoluter.dneprmap.FindPlaces"
             android:label="@string/title_activity_find_places"
             android:parentActivityName="com.asoluter.dneprmap.Choose" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.Choose" />
         </activity>
         <activity
             android:name="com.asoluter.dneprmap.Choose"
@@ -67,24 +64,16 @@
             android:name="com.asoluter.dneprmap.Travel"
             android:label="@string/title_activity_travel"
             android:parentActivityName="com.asoluter.dneprmap.Choose" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.Choose" />
         </activity>
         <activity
             android:name="com.asoluter.dneprmap.OwnTravel"
             android:label="@string/title_activity_own_travel"
             android:parentActivityName="com.asoluter.dneprmap.Travel" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.Travel" />
         </activity>
         <activity
             android:name="com.asoluter.dneprmap.Travel_maps"
-            android:label="@string/title_activity_travel_maps" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asoluter.dneprmap.Travel" />
+            android:label="@string/title_activity_travel_maps"
+            android:parentActivityName="com.asoluter.dneprmap.Travel" >
         </activity>
     </application>
 

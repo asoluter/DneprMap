@@ -72,7 +72,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     SharedPreferences preferences;
-    SharedPreferences.Editor editor;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,7 +97,6 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER,0,1,this);
         locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER,0,1,this);
         preferences=getSharedPreferences("MyPref",MODE_PRIVATE);
-        editor=preferences.edit();
     }
 
     @Override
@@ -257,6 +255,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         else return false;
     }
 
+
     public GoogleMap.OnInfoWindowClickListener onMarker=new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
@@ -280,9 +279,9 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if(!location.equals(null)){
+        if(location!=null){
             //from=new LatLng(location.getLatitude(),location.getLongitude());
-            moveMarker(PositionMarker,location);
+            if(PositionMarker!=null)moveMarker(PositionMarker,location);
         }
     }
 
@@ -306,7 +305,7 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         dialog=new AlertDialog.Builder(this).create();
 
         dialog.setTitle("Warning");
-        dialog.setMessage("Не включены службы геолокаци");
+        dialog.setMessage("Не включены службы геолокации");
         dialog.setCancelable(false);
         dialog.setButton(DialogInterface.BUTTON_POSITIVE,"Включить",new DialogInterface.OnClickListener() {
             @Override
@@ -345,16 +344,5 @@ public class MapsActivity extends FragmentActivity implements LocationListener {
         height = display.getHeight();
     }
 
-    private LatLngBounds createLatLngBoundsObject(LatLng firstLocation, LatLng secondLocation)
-    {
-        if (firstLocation != null && secondLocation != null)
-        {
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            builder.include(firstLocation).include(secondLocation);
-
-            return builder.build();
-        }
-        return null;
-    }
 
 }
